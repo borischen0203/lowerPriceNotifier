@@ -1,4 +1,12 @@
-from flask import Flask
+import os
+
+import requests
+from dotenv import load_dotenv
+from flask import Flask, request
+
+load_dotenv('.env')
+
+webhook_url = os.environ.get('SLACK_WEBHOOK_URL', '')
 
 app = Flask(__name__)
 
@@ -10,10 +18,24 @@ def home():
 def health_check():
     return 'OK', 200
 
+@app.route('/notify', methods=['POST'])
+def post_api():
+    data = request.get_json()
+    text = data.get('text', '')
+    response = send_to_slack(text)
+    if response.status_code == 200:
+        return 'Success', 200
+    else:
+        return 'Failed to send message to Slack', response.status_code
+
+def send_to_slack(text):
+    if not webhook_url:
+        print("Slack webhook URL not configured")
+        return
+
+    payload = {"text": text}
+    response = requests.post(webhook_url, json=payload)
+    return response
+
 if __name__ == '__main__':
     app.run()
-
-# if __name__ == '__main__':
-#     host = os.environ.get('HOST', 'localhost')
-#     port = int(os.environ.get('PORT', 8080))
-#     app.run(host=host, port=port)

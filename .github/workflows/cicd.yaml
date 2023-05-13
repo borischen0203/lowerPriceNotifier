@@ -47,5 +47,5 @@ jobs:
       - name: Deploy to Vercel (Prod)
         uses: amondnet/vercel-action@v21
         with:
-          token: ${{ secrets.VERCEL_TOKEN }}
-          args: "--prod=true"
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: "--prod=true"

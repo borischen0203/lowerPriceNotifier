@@ -18,8 +18,17 @@ def home():
 def health_check():
     return 'OK', 200
 
+@app.route('/test-notify', methods=['GET'])
+def test_notify_slack_api():
+    text = "Test message sent with cron jobs"
+    response = send_to_slack(text)
+    if response.status_code == 200:
+        return 'Success', 200
+    else:
+        return 'Failed to send message to Slack', response.status_code
+
 @app.route('/notify', methods=['POST'])
-def post_api():
+def notify_slack_api():
     data = request.get_json()
     text = data.get('text', '')
     response = send_to_slack(text)

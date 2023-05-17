@@ -39,7 +39,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
-          vercel-args: "--prebuilt=true"
+          vercel-args: "--prebuilt"
 
   deploy-prod:
     needs: build

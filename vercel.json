@@ -4,11 +4,6 @@
   "github": {
     "enabled": false
   },
-    "crons": [{
-      "path": "/test-notify",
-      "schedule": "0 1 * * *"
-    }]
-  ,
   "builds": [
     {
       "src": "app.py",

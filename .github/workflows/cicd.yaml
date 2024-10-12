@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - test-docker
   pull_request:
     branches:
       - main
@@ -26,31 +27,31 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-  deploy-dev:
-    needs: build
-    if: github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
+  # deploy-dev:
+  #   needs: build
+  #   if: github.ref == 'refs/heads/dev'
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to Vercel (Dev)
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID}}
-          vercel-project-id: ${{ secrets.PROJECT_ID}}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Deploy to Vercel (Dev)
+  #       uses: amondnet/vercel-action@v20
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
+  #         vercel-org-id: ${{ secrets.ORG_ID}}
+  #         vercel-project-id: ${{ secrets.PROJECT_ID}}
 
-  deploy-prod:
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+  # deploy-prod:
+  #   needs: build
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to Vercel (Prod)
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID}}
-          vercel-project-id: ${{ secrets.PROJECT_ID}}
-          vercel-args: "--prod=true"
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Deploy to Vercel (Prod)
+  #       uses: amondnet/vercel-action@v20
+  #       with:
+  #         vercel-token: ${{ secrets.VERCEL_TOKEN }}
+  #         vercel-org-id: ${{ secrets.ORG_ID}}
+  #         vercel-project-id: ${{ secrets.PROJECT_ID}}
+  #         vercel-args: "--prod=true"
